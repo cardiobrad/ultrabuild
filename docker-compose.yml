@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  ultrabuild:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=ultrabuild
+      - POSTGRES_PASSWORD=secure-password
+      - POSTGRES_DB=ultrabuild
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
